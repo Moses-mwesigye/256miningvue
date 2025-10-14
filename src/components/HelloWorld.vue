@@ -114,7 +114,7 @@ async function submitPhoto() {
 		</div>
 		<div v-if="showModal" class="modal-overlay">
 			<div class="modal-card">
-				<div class="modal-title">Upload Photo for Lab Analysis</div>
+				<div class="modal-title">Upload Photo/sample data for Lab Analysis</div>
 						<div style="display: flex; gap: 10px; align-items: flex-end;">
 							<label class="modal-label" style="margin-bottom:0;">
 								<span>Phone Number:</span>
