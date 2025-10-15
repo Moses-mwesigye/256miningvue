@@ -82,7 +82,7 @@ async function submitPhoto() {
 			// Step 2: Use the top tag for Google search
 			const topTag = data.result.tags[0].tag.en;
 			const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(topTag)}`;
-			window.open(googleUrl, '_blank');
+			window.location.href = googleUrl;
 			closeModal();
 			loading.value = false;
 		};
@@ -99,15 +99,18 @@ async function submitPhoto() {
 
 <template>
 		<div class="page-bg">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Flag_of_Uganda.svg" alt="Ugandan Flag" class="uganda-flag" />
+			<div class="form-card-wrapper">
 				<form class="top-form" @submit.prevent="handleTopFormSubmit">
-					<input class="top-input" v-model="topDistrict" required placeholder="District" />
-					<input class="top-input" v-model="topEmail" type="email" required placeholder="Email" />
+					<div class="top-form-vertical">
+						<input class="top-input" v-model="topDistrict" required placeholder="District" />
+						<input class="top-input" v-model="topEmail" type="email" required placeholder="Email" />
+					</div>
 					<input class="top-input" v-model="topPhone" type="tel" required placeholder="Phone" />
 					<button class="top-btn" type="submit">Save</button>
 				</form>
 				<div v-if="topSuccess" class="top-success-popup">Successfully saved!</div>
-		<div class="glass-card">
+			</div>
+			<div class="glass-card">
 			<p class="title">MINING MS</p>
 			<p class="blue-text">Mineral Analysis</p>
 			<button class="sample-btn" @click="openModal">Upload Photo for Lab Analysis</button>
@@ -143,13 +146,27 @@ async function submitPhoto() {
 <!-- Modal and trigger button removed as per user request -->
 <style scoped>
 /* Top right form styles */
+.form-card-wrapper {
+	width: 100%;
+	max-width: 420px;
+	margin: 0 auto 18px auto;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
 .top-form {
-	position: absolute;
-	top: 24px;
-	right: 110px;
 	display: flex;
 	gap: 8px;
-	z-index: 2100;
+	align-items: flex-start;
+	width: 100%;
+	position: static;
+	margin-bottom: 0;
+	z-index: 1;
+}
+.top-form-vertical {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 .top-input {
 	padding: 6px 10px;
@@ -157,6 +174,30 @@ async function submitPhoto() {
 	border: 1px solid #bdbdbd;
 	font-size: 1em;
 	min-width: 90px;
+		width: 100%;
+		box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+	.top-form {
+		position: static;
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+		padding: 0 12px;
+	}
+	.top-form-vertical {
+		width: 100%;
+	}
+	.top-input {
+		min-width: 0;
+		margin-bottom: 8px;
+		font-size: 1.05em;
+	}
+	.top-btn {
+		width: 100%;
+		margin-top: 8px;
+	}
 }
 .top-btn {
 	background: linear-gradient(90deg, #7c3aed 40%, #2563eb 100%);
@@ -173,9 +214,6 @@ async function submitPhoto() {
 	background: linear-gradient(90deg, #2563eb 40%, #7c3aed 100%);
 }
 .top-success-popup {
-	position: absolute;
-	top: 60px;
-	right: 110px;
 	background: #e6ffe6;
 	color: #2563eb;
 	border: 1px solid #bdbdbd;
@@ -183,18 +221,11 @@ async function submitPhoto() {
 	padding: 8px 18px;
 	font-weight: 600;
 	box-shadow: 0 2px 8px 0 rgba(37,99,235,0.10);
-	z-index: 2200;
-}
-/* Ugandan flag top right */
-.uganda-flag {
-	position: absolute;
-	top: 24px;
-	right: 32px;
-	width: 56px;
-	height: auto;
-	border-radius: 6px;
-	box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
-	z-index: 2000;
+	margin-top: 8px;
+	margin-bottom: 0;
+	text-align: center;
+	width: 100%;
+	z-index: 1;
 }
 body {
 	min-height: 100vh;
